@@ -1,6 +1,5 @@
-import '../components/layout/Header.tsx'
 import {Box} from "@mui/material";
-import Feed from "../components/common/Feed.tsx";
+import RoleHandler from "../authentication/RoleHandler.tsx";
 
 function HomePage() {
 
@@ -13,7 +12,7 @@ function HomePage() {
                 flexDirection: 'column',
                 gap: '50px',
             }}>
-            <Feed/>
+            <RoleHandler/>
         </Box>
     );
 }

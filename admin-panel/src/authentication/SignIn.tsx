@@ -5,13 +5,13 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import {styled} from '@mui/material/styles';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
 const Card = styled(MuiCard)(({theme}) => ({
     display: 'flex',
@@ -50,11 +50,12 @@ const SignUpContainer = styled(Stack)(({theme}) => ({
     },
 }));
 
-export default function SignUp() {
+export default function SignIn() {
     const [emailError, setEmailError] = React.useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
     const [passwordError, setPasswordError] = React.useState(false);
     const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
+    const navigate = useNavigate();
 
     const validateInputs = () => {
         const email = document.getElementById('email') as HTMLInputElement;
@@ -103,9 +104,12 @@ export default function SignUp() {
                 "http://localhost:8080/api/auth/login",
                 requestData
             );
-
             const { token } = response.data;
             localStorage.setItem('token', token);
+
+            if (!!token) {
+                navigate('/handler');
+            }
         } catch (error) {
             console.error("Аутентифікація не вдалася:", error);
         }
@@ -171,18 +175,6 @@ export default function SignUp() {
                     <Divider>
                         <Typography sx={{color: 'text.secondary'}}>or</Typography>
                     </Divider>
-                    <Box sx={{display: 'flex', flexDirection: 'column', gap: 2}}>
-                        <Typography sx={{textAlign: 'center'}}>
-                            Don't have an account?{' '}
-                            <Link
-                                href="/sign-up"
-                                variant="body2"
-                                sx={{alignSelf: 'center'}}
-                            >
-                                Sign up
-                            </Link>
-                        </Typography>
-                    </Box>
                 </Card>
             </SignUpContainer>
         </Box>
