@@ -9,6 +9,7 @@ function Panel() {
     let open: boolean = !!anchorEl;
     const navigate = useNavigate();
     const [selectedTopic, setSelectedTopic] = useState("");
+    const topics: string[] = ['Writing', 'Reading', 'Grammar', 'Listening', 'Tests'];
 
     const handleOpen = (event: React.MouseEvent<HTMLButtonElement>, topic: string) => {
         setAnchorEl(event.currentTarget);
@@ -17,20 +18,22 @@ function Panel() {
 
     const handleOptionClick = (option: string) => {
         console.log(option);
-        console.log("correctTopic: " + selectedTopic)
+        console.log("selectedTopic: " + selectedTopic)
 
         if (option === "Create") {
-            console.log("navigating... to testCreateEntity")
+            console.log("navigating... to CreateEntity")
 
-            navigate('/createTest', {
-                state: selectedTopic.toLowerCase()
-            })
+            navigate(`/create${selectedTopic}`);
+        }
+
+        if (option === "Update") {
+            console.log("navigating... to CreateEntity")
+
+            navigate(`/update${selectedTopic}`);
         }
 
         setAnchorEl(null);
     }
-
-    const topics: string[] = ['Writing', 'Reading', 'Grammar', 'Listening', 'Tests']
 
     return (
         <Box
@@ -42,7 +45,7 @@ function Panel() {
             }}
         >
             {topics.map((topic) => (
-                <>
+                <Box key={topic}>
                     <Button
                         sx={{
                             flex: 1,
@@ -68,9 +71,8 @@ function Panel() {
                     >
                         <MenuItem onClick={() => handleOptionClick("Create")}>Create</MenuItem>
                         <MenuItem onClick={() => handleOptionClick("Update")}>Update</MenuItem>
-                        <MenuItem onClick={() => handleOptionClick("Delete")}>Delete</MenuItem>
                     </Menu>
-                </>
+                </Box>
             ))}
         </Box>
 
